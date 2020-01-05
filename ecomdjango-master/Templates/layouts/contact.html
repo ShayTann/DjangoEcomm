@@ -1,0 +1,188 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block extra-css %}
+
+<style type="text/css">
+  .map-container-section {
+  overflow:hidden;
+  padding-bottom:56.25%;
+  position:relative;
+  height:0;
+
+}
+.map-container-section iframe {
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  position:absolute;
+}
+
+
+.blue{
+    float: right;
+    color:#FFF;
+}
+.form{
+    margin : 20px 20px 20px 20px;
+}
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="site-section" style="background: url('{{ asset('frontEnd') }}/images/hero_3.jpg');">
+      <div class="container">
+
+        <!-- Section: Contact v.3 -->
+<section class="contact-section my-5">
+
+  <!-- Form with header -->
+  <div class="card">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      {{-- <div class="col-lg-8"> --}}
+
+        <div class="card-body form">
+           <form action="contact/store" method="post" id="contactForm">
+           {% csrf_token %}
+
+          <!-- Header -->
+          <h3 class="mt-4"><i class="fas fa-envelope pr-2"></i>Write to us:</h3>
+
+          <!-- Grid row -->
+          <div class="row">
+
+
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="first_name" class="form-control" name="first_name">
+                <label for="first_name" class="">First name</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="last_name" class="form-control" name="last_name">
+                <label for="last_name" class="">Last name</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="email" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" required>
+
+                <label data-error="wrong"for="email" class="">Your email</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-6">
+              <div class="md-form mb-0">
+                <input type="text" id="phone" class="form-control" name="phone">
+                <label for="phone" class="">Your phone</label>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+          <!-- Grid row -->
+          <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-12">
+              <div class="md-form mb-0">
+                <textarea id="message" class="form-control md-textarea" rows="3" name="message" required></textarea>
+
+
+                <button type="submit" class="btn-floating btn-lg blue" style="border:none;" > <i class="far fa-paper-plane"></i>  </button>
+              </div>
+            </div>
+            <!-- Grid column -->
+
+          </div>
+          <!-- Grid row -->
+
+        </form>
+
+        </div>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-lg-4">
+
+        <div class="card-body contact text-center h-100 white-text">
+
+          <h3 class="my-4 pb-2">Contact information</h3>
+          <ul class="text-lg-left list-unstyled ml-4">
+            <li>
+              <p><i class="fas fa-map-marker-alt pr-2"></i>San Francisco, California, USA</p>
+            </li>
+            <li>
+              <p><i class="fas fa-phone pr-2"></i>+ 603-236-7108</p>
+            </li>
+            <li>
+              <p><i class="fas fa-envelope pr-2"></i>litmerch@merchLit.com</p>
+            </li>
+          </ul>
+          <hr class="hr-light my-4">
+          <ul class="list-inline text-center list-unstyled">
+            <li class="list-inline-item">
+              <a class="p-2 fa-lg tw-ic">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="p-2 fa-lg li-ic">
+                <i class="fab fa-linkedin-in"> </i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="p-2 fa-lg ins-ic">
+                <i class="fab fa-instagram"> </i>
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+    </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Form with header -->
+
+</section>
+<!-- Section: Contact v.3 -->
+
+
+      </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% load cart_template_tag %}
+<style type="text/css">
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #FFFFFF;
+
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+
+
+}
+
+
+.dropdown-menu a {
+  color: black;
+
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-menu a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-menu {display: block;}
+
+
+
+
+</style>
+
+
+
+<div class="site-navbar bg-white py-2">
+
+   <div class="search-wrap">
+     <div class="container">
+
+       <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
+       <form action="/search"  method="POST">
+
+
+       <input value="" type="text" name="query" id="query" class="form-control forSearch" placeholder="Search a deal.." />
+
+
+       </form>
+
+     </div>
+   </div>
+
+   <div class="container">
+     <div class="d-flex align-items-center justify-content-between">
+       <div class="logo">
+         <div class="site-logo">
+
+           <a href="/" class="js-logo-clone">Lit Merch<span class="sr-only">(current)</span></a>
+         </div>
+       </div>
+
+       <div class="main-nav d-none d-lg-block">
+         <nav class="site-navigation text-right text-md-center" role="navigation">
+           <ul class="site-menu js-clone-nav d-none d-lg-block">
+             <li class="has-children"><a href="/">Home</a>
+              <ul class="dropdown">
+                <li><a href="#gender"><b>ALL DEALS</b></a></li>
+                <li><a href="#top_deals"><b>TOP Selling</b></a></li>
+                <li><a href="#hot_deals"><b>HOT DEALS</b></a></li>
+              </ul>
+
+
+             </li>
+
+             <li class="has-children">
+               <a href="/shop">CATEGORIES</a>
+               <ul class="dropdown"> 
+                    <li><a href="#gender"><b>For Women</b></a></li> {% comment %}  A EDITER !!! {% endcomment %}
+                    <li><a href="#top_deals"><b>For Male</b></a></li>
+
+
+
+
+
+
+
+               </ul>
+             </li>
+             <li {% if request.get_full_path == home %} class="active"{% endif %} ><a  href="/about">About us</a></li>
+             <li {% if request.get_full_path == home %} class="active"{% endif %} ><a href="/contact">Contact us</a></li>
+
+
+             <li style="width: 120px;"></li>
+             </ul>
+             </nav>
+             </div>
+
+            <div id="icons">
+              
+
+              {% if user.is_authenticated %}
+
+              <li class="dropdown d-inline-block">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="position:relative; padding-left:50px;">
+                <img src="{{user.profile.image.url}}" style="width:35px; height:32px; position:absolute; left:10px; border-radius:100%;bottom: -4px;">
+                     <span class="caret"></span>
+                          </a>
+                <ul class="dropdown-menu" role="menu">
+                                <li><a style="padding: 12px 16px;" href="/profile"><i style="color:#218CD7;" class="fa fa-btn fa-user"></i>&nbsp;&nbsp;Profile</a></li>
+
+                                <li><a style="padding: 12px 16px;" href="/logout" ><i style="color:#218CD7;" class="fas fa-sign-out-alt"
+                                  ></i>&nbsp;&nbsp;Sign Out</a></li>
+
+                                   
+                            </ul>
+                        </li>
+                        <a href="{% url 'order_summary' %}" class="icons-btn d-inline-block bag">
+               
+                <span class="icon-shopping-bag"></span>
+               <span class="number"> {{ request.user|cart_item_count }}</span>
+               </a>
+                <a href="/cart" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span class="icon-menu"></span></a>
+
+              {% else %}
+                <a title="Log In" href="/login" class="icons-btn d-inline-block"><span style="font-size: 19px;" class="fas fa-user-alt"></span></a>
+              {% endif %}
+
+               <a title="Search an offer" href="#" class="icons-btn d-inline-block js-search-open"><span style="font-size: 19px;" class="icon-search"></span></a>
+               
+
+           </div>
+
+
+   </div>
+ </div>
+</div>

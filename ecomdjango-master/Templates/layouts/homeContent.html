@@ -1,0 +1,291 @@
+{% extends  'layouts/base.html' %}
+
+
+{% block extra-css %}
+
+<style type="text/css">
+
+.imgProduct{
+    width:100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 900px) {
+    .imgProduct{
+    height: 35vw;
+    }
+}
+.card-footer{
+    padding:0 0 0 0
+}
+.space{
+    padding-top: 20px
+}
+.round{
+    border-radius: 50%;
+}
+
+</style>
+
+
+{% endblock %}
+
+
+{% block content %}
+{% load static %}
+<div class="site-blocks-cover inner-page" data-aos="fade">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 ml-auto order-md-2 align-self-start">
+                <div class="site-block-cover-content">
+                    <h2 class="sub-title">#Best Deals on Clothes</h2>
+                    <h1>#Summer 2020</h1>
+                    <p><a href="#all_deals" class="btn btn-black rounded-0">Shop Now</a></p>
+                </div>
+            </div>
+            <div class="col-md-6 order-1 align-self-end">
+                <img src="{% static 'images/model_2.png'%}" alt="Image" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="site-section" id="hot_deals">
+    <div class="container">
+        <div class="row">
+            <div class="title-section text-center mb-5 col-12">
+                <h2 class="text-uppercase" style="top: 50px;">Hot Deals for {{user.profile.sex}}&nbsp;<i style="color:#ee4266;" class="fab fa-hotjar" id="gender"></i></h2>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-12 block-3">
+                <div class="nonloop-block-3 owl-carousel">
+
+                  <!-- LIST THE ITEMS FOR WOMEN for exemple? -->
+
+                        <!-- NEED CHANGING -->
+                {% for item in items%}
+                {% if item.sex == user.profile.sex%}
+
+
+                <div class="item forClick">
+                    <div class="item-entry">
+                        <a href="{{item.get_absolute_url}}" class="product-item md-height d-block">
+                        <img src="{{item.image.url}}" alt="Image" class="img-fluid" >
+                        </a>
+                        <h2 style="text-align: center;height:60px; !important;display:block;" class="item-title"><a href="{{item.get_absolute_url}}">{{item.title}}&nbsp;<span  class="badge badge-pill danger-color">NEW</span></a></h2>
+                        <center>
+                        <p class="lead">
+                         {% if item.discount_price %}
+                        <span class="mr-1">
+                        <del>${{ item.price }}</del>
+                        </span>
+                        <span><button type="button" class="btn btn-info btn-rounded">{{item.discount_price}}$</button></span>
+                        {% else %}
+                        <span><button type="button" class="btn btn-info btn-rounded">{{item.price}}$</button></span>
+                        {% endif %}
+                        </p>
+                            <div class="star-rating space">
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                            </div>
+                        </center>
+                        <center><a target="_blank" href="{{item.get_absolute_url}}"  type="button" class="btn btn-danger btn-rounded  round">Buy Now</a></center>
+
+                    </div>
+                </div>
+                {% endif %}
+
+                {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="site-section" id="all_deals">
+    <div class="container">
+        <div class="title-section mb-5">
+            <h2 class="text-uppercase"><span class="d-block">Today's</span> Best Deals</h2>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-12 order-1">
+                <div class="row mb-3">
+
+
+                   {% for item in items %}
+
+
+                    <div class="container" style="width:350px">
+                    <!--Card-->
+                        <!--  height:60px !important;display: block;line-height: 60px; -->
+                        <div  class="card card-cascade card-ecommerce widery forClick" data-id="{{item.id}}">
+                            <!--Card image-->
+                            <div class="view view-cascade overla"  >
+                                <img class="card-img-top imgProduct" src="{{item.image.url}}" alt="Image">
+                                <a target="_blank" href="{{item.get_absolute_url}}">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                            <!--/.Card image-->
+                            <!--Card content-->
+                            <div class="card-body card-body-cascade text-center">
+                                <!--Category & Title-->
+                                <h4 class="card-title"><strong><a style=" height:60px; !important;display:block;" target="_blank" href="{{item.get_absolute_url}}" >{{item.title}}</a></strong></h4>
+                                <br>
+                                <!--Description-->
+                                <p class="card-text">{{item.description}}<a style="color: blue;" href='{{item.get_absolute_url}}' >View Details</a></p>
+                                <!--Card footer-->
+                                <div class="card-footer">
+                                    <span class="float-left">
+                                        <a target="_blank" href="{{item.get_absolute_url}}"  type="button" class="btn btn-danger btn-rounded round">Buy Now</a>
+                                    </span>
+                                    <span class="float-right mt-2 pt-1" >
+                                        <a title="View details" href='{{item.get_absolute_url}}' ><i style="color:#0FBCB9;margin-right: 6px;" class="fas fa-info-circle"></i>
+                                        </a>
+
+                                        {% if user.is_authenticated %}
+                                            <a class="active favorite-toggle" data-id="{{item.id}}" title="Added to Favorite">
+                                            {% comment %} <i class=" {{ !Auth::user()->favorite_creatives->where('pivot.creative_id',$creative->id)->count()  == 0 ? 'fas' : 'far'}} fa-heart"></i> {% endcomment %}
+                                        <!-- BEDEL HADI IDA BGHITI ! KONA DIRNA KITLA3 HAD MSG SEULEMENT IDA KAN USER LOGIN
+                                       -->
+                                       
+                                        {% else %}
+                                         <a  onclick="toastr.info('To add Item to your cart list, You need to login first.');"><i style="color:red;" class="fas fa-heart"></i></a>
+                                        </a>
+                                    {% endif %}
+
+                                    </span>
+                                </div>
+                            </div>
+                        <!--/.Card content-->
+                        </div>
+                    <!--/.Card-->
+                    <br><br><br>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+                {% comment %} <div class="row">
+                    <div class="col-md-12 text-center">
+                    {{ $creatives->links() }}
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-section" id="top_deals">
+    <div class="container">
+        <div class="row">
+            <div class="title-section text-center mb-5 col-12">
+                <h2 class="text-uppercase">Top EXCLUSIVES Deals&nbsp;<i style="color:#ee4266;" class="fas fa-fire"></i></h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 block-3">
+                <div class="nonloop-block-3 owl-carousel">
+
+                {% for item in items %}
+
+                    <div class="item forClick" data-id="{{item.id}}">
+                        <div class="item-entry">
+                            <a href="{{item.get_absolute_url}}"  target="_blank" class="product-item md-height d-block">
+                                <img src="{{item.image.url}}" alt="Image" class="img-fluid" >
+                            </a>
+                            <h2 style="text-align: center;height:60px; !important;display:block;" class="item-title "><a href="{{item.get_absolute_url}}" target="_blank">{{item.title}}</a></h2>
+                            <center><div class="star-rating">
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                                <span class="icon-star2 text-warning"></span>
+                            </div></center>
+                            <center><a target="_blank" href="{{item.get_absolute_url}}"  type="button" class="btn btn-danger btn-rounded">Buy Now</a></center>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div> 
+
+
+{% endblock %}
+
+
+
+
+
+{% block js %}
+
+
+    <!-- Script for Newsletter Modal PopUp and RegisterPopUP - Show Only once per session  -->
+    <script type="text/javascript">
+
+    $(function() {
+        if ((typeof Storage != "undefined")) {
+            if (!localStorage.getItem("done") ) {
+                setTimeout(function() {
+                    $('#newsletter').modal('show');
+                }, 2000);
+                setTimeout(function() {
+                    $('#registerpopup').modal('show');
+                }, 20000);
+            }
+            localStorage.setItem("done", true);
+        }
+    });
+
+     // Incriment the value of Clicks when a user click in an offer
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('.forClick' ).click(function(e) {
+        let id=$(this).data("id");
+        $.post('/shop2',{id:id},function(data){
+            console.log(data);
+        })
+        $.post('/userclick',{id:id},function(data){
+            console.log(data);
+        })
+    });
+
+    toastr.options.showMethod = 'slideDown';
+    toastr.options.hideMethod = 'slideUp';
+    toastr.options.closeMethod = 'slideUp';
+
+    $('.favorite-toggle').click( function () {
+        var id = this.dataset.id
+
+        $.post('/cart' , { id : id } , (data) => {
+            if(data.toggle){
+                $(this).find('i').removeClass("far").addClass( "fas" )
+                toastr.success('Item successfully added to your cart list');
+            }
+            else{
+                $(this).find('i').removeClass( "fas" ).addClass( "far" )
+                toastr.warning('Item removed from your cart list');
+            }
+        });
+    });
+    </script>
+
+{% endblock %}

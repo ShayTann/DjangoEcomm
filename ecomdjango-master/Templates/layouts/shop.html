@@ -1,0 +1,117 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block extra-css %}
+
+<style type="text/css">
+
+.imgProduct{
+    width:100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+
+@media only screen and (max-width: 900px) {
+    .imgProduct{
+    height: 35vw;
+    }
+}
+.card-footer{
+    padding:0 0 0 0
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+{% load static %}
+<div class="site-blocks-cover inner-page" data-aos="fade">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 ml-auto order-md-2 align-self-start">
+                    <div class="site-block-cover-content">
+                        <h2 class="sub-title">Your Cart</h2>
+                        <h1>Exclusive Online Offers</h1>
+                        <p><a href="#all_deals" class="btn btn-black rounded-0">Shop Now</a></p>
+                    </div>
+                </div>
+            <div class="col-md-6 order-1 align-self-end">
+                <img src="{% static 'images/model_1.png'%}" alt="Image" class="img-fluid">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Item Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order_item in object.items.all %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{{ order_item.item.get_absolute_url }}" >    {{ order_item.item.title }}</a></td>
+            <td>{{ order_item.item.price }}</td>
+            <td>
+                <a href="{% url 'remove-single-item-from-cart' order_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
+                {{ order_item.quantity }}
+                <a href="{% url 'add-to-cart' order_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a>
+            </td>
+            <td>
+            {% if order_item.item.discount_price %}
+                ${{ order_item.get_total_discount_item_price }}
+                <span class="badge badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
+            {% else %}
+                ${{ order_item.get_total_item_price }}
+            {% endif %}
+            <a style='color: red;' href="{% url 'remove-from-cart' order_item.item.slug %}">
+                <i class="fas fa-trash float-right"></i>
+            </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan='5'>Your cart is empty</td>
+        </tr>
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if object.coupon %}
+        <tr>
+            <td colspan="4"><b>Coupon</b></td>
+            <td><b>-${{ object.coupon.amount }}</b></td>
+        </tr>
+        {% endif %}
+        {% if object.get_total %}
+        <tr>
+            <td colspan="4"><b>Order Total</b></td>
+            <td><b>${{ object.get_total }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-warning float-right ml-2' href='/checkout/'>Proceed to checkout</a>
+            <a class='btn btn-primary float-right' href='/'>Continue shopping</a>
+            </td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+
+
+
+{% endblock %}
+
