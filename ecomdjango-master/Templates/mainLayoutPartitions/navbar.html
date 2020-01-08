@@ -52,14 +52,14 @@
        <div class="logo">
          <div class="site-logo">
 
-           <a href="/" class="js-logo-clone">Lit Merch<span class="sr-only">(current)</span></a>
+           <a href="/" class="js-logo-clone">Morshka<span class="sr-only">(current)</span></a>
          </div>
        </div>
 
        <div class="main-nav d-none d-lg-block">
          <nav class="site-navigation text-right text-md-center" role="navigation">
            <ul class="site-menu js-clone-nav d-none d-lg-block">
-             <li class="has-children"><a href="/">Home</a>
+             <li class="has-children"><a href="/">COLLECTION</a>
               <ul class="dropdown">
                 <li><a href="#gender"><b>ALL DEALS</b></a></li>
                 <li><a href="#top_deals"><b>TOP Selling</b></a></li>
@@ -70,30 +70,44 @@
              </li>
 
              <li class="has-children">
-               <a href="/shop">CATEGORIES</a>
-               <ul class="dropdown"> 
+               <a href="/shop">WOMEN</a>
+               <ul class="dropdown">
                     <li><a href="#gender"><b>For Women</b></a></li> {% comment %}  A EDITER !!! {% endcomment %}
                     <li><a href="#top_deals"><b>For Male</b></a></li>
 
+               </ul>
+             </li>
 
-
-
-
-
+             <li class="has-children">
+               <a href="/shop">MEN</a>
+               <ul class="dropdown">
+                    <li><a href="#gender"><b>For Women</b></a></li> {% comment %}  A EDITER !!! {% endcomment %}
+                    <li><a href="#top_deals"><b>For Male</b></a></li>
 
                </ul>
              </li>
+
+             <li class="has-children">
+               <a href="/shop">KIDS</a>
+               <ul class="dropdown">
+                    <li><a href="#gender"><b>For Women</b></a></li> {% comment %}  A EDITER !!! {% endcomment %}
+                    <li><a href="#top_deals"><b>For Male</b></a></li>
+
+               </ul>
+             </li>
+
              <li {% if request.get_full_path == home %} class="active"{% endif %} ><a  href="/about">About us</a></li>
-             <li {% if request.get_full_path == home %} class="active"{% endif %} ><a href="/contact">Contact us</a></li>
 
 
-             <li style="width: 120px;"></li>
+
+             <li style="width: 10px;"></li>
              </ul>
              </nav>
              </div>
 
             <div id="icons">
-              
+                 <a title="Search an offer" href="#" class="icons-btn d-inline-block js-search-open"><span style="font-size: 19px;" class="icon-search"></span></a>
+
 
               {% if user.is_authenticated %}
 
@@ -108,22 +122,23 @@
                                 <li><a style="padding: 12px 16px;" href="/logout" ><i style="color:#218CD7;" class="fas fa-sign-out-alt"
                                   ></i>&nbsp;&nbsp;Sign Out</a></li>
 
-                                   
+
                             </ul>
                         </li>
-                        <a href="{% url 'order_summary' %}" class="icons-btn d-inline-block bag">
-               
-                <span class="icon-shopping-bag"></span>
-               <span class="number"> {{ request.user|cart_item_count }}</span>
-               </a>
-                <a href="/cart" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span class="icon-menu"></span></a>
 
               {% else %}
                 <a title="Log In" href="/login" class="icons-btn d-inline-block"><span style="font-size: 19px;" class="fas fa-user-alt"></span></a>
               {% endif %}
+              <a href="{% url 'order_summary' %}" class="icons-btn d-inline-block bag">
 
-               <a title="Search an offer" href="#" class="icons-btn d-inline-block js-search-open"><span style="font-size: 19px;" class="icon-search"></span></a>
-               
+      <span class="icon-shopping-bag"></span>
+     <span class="number"> {{ request.user|cart_item_count }}</span>
+     </a>
+      <a href="/cart" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span class="icon-menu"></span></a>
+
+
+
+
 
            </div>
 
