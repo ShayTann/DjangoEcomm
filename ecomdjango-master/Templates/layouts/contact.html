@@ -34,7 +34,9 @@
 
 {% block content %}
 
-<div class="site-section" style="background: url('{{ asset('frontEnd') }}/images/hero_3.jpg');">
+{% load static %}
+
+<div class="site-section" style="background: url('{% static 'images/hero_3.jpg'%}');">
       <div class="container">
 
         <!-- Section: Contact v.3 -->
@@ -47,7 +49,7 @@
     <div class="row">
 
       <!-- Grid column -->
-      {{-- <div class="col-lg-8"> --}}
+      <div class="col-lg-8">
 
         <div class="card-body form">
            <form action="contact/store" method="post" id="contactForm">
@@ -88,7 +90,7 @@
             <!-- Grid column -->
             <div class="col-md-6">
               <div class="md-form mb-0">
-                <input type="email" id="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" required>
+                <input type="email" id="email" class="form-control" name="email" required>
 
                 <label data-error="wrong"for="email" class="">Your email</label>
               </div>
@@ -116,7 +118,8 @@
                 <textarea id="message" class="form-control md-textarea" rows="3" name="message" required></textarea>
 
 
-                <button type="submit" class="btn-floating btn-lg blue" style="border:none;" > <i class="far fa-paper-plane"></i>  </button>
+                <button id="sub" type="submit" class="btn-lg blue" style="border:none;" > <i class="far fa-paper-plane"></i>  </button>
+                <label for="sub" class="">Your Message</label>
               </div>
             </div>
             <!-- Grid column -->
@@ -142,10 +145,10 @@
               <p><i class="fas fa-map-marker-alt pr-2"></i>San Francisco, California, USA</p>
             </li>
             <li>
-              <p><i class="fas fa-phone pr-2"></i>+ 603-236-7108</p>
+              <p><i class="fas fa-phone pr-2"></i>+ 602-236-7108</p>
             </li>
             <li>
-              <p><i class="fas fa-envelope pr-2"></i>litmerch@merchLit.com</p>
+              <p><i class="fas fa-envelope pr-2"></i>customer_service@morshka.com</p>
             </li>
           </ul>
           <hr class="hr-light my-4">

@@ -6,9 +6,9 @@ from django.shortcuts import reverse
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
 # Create your models here.
-CATEGORY_CHOICES = ( ('A','ACTION'),
-('R','RACE'),
-('S','SPORT'),
+CATEGORY_CHOICES = ( ('MEN','WOMEN'),
+('WOMEN','WOMEN'),
+('KIDS','KIDS'),
 )
 ADDRESS_CHOICES = (
     ('B', 'Billing'),
@@ -34,11 +34,11 @@ class Item(models.Model):
     sex = models.CharField(blank=True,null=True,max_length=50)
     price = models.FloatField()
     description = models.TextField(default="Hey")
-    category = models.CharField(choices=CATEGORY_CHOICES,max_length=2)
+    category = models.CharField(choices=CATEGORY_CHOICES,max_length=3)
     image = models.ImageField(upload_to='item_pics')
     slug = AutoSlugField(populate_from='title')
     discount_price=models.FloatField(blank=True,null=True)
-    
+
     def __str__(self):
         return self.title
     def get_absolute_url(self):
@@ -116,7 +116,7 @@ class Address(models.Model):
     apartment_address = models.CharField(max_length=100)
     country = CountryField(multiple=False)
     zip = models.CharField(max_length=100)
-    
+
     default = models.BooleanField(default=False)
 
     def __str__(self):

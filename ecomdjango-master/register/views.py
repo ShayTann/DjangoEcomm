@@ -35,7 +35,7 @@ def register(response):
         if form.is_valid():
             try:
                 user = form.save()
-                
+
             except :
                 print("TO SKIP ERROR PAGE")
             finally :
@@ -54,8 +54,19 @@ def home(response):
     context = { 'items' : Item.objects.all(),
                 'user' : response.user
     }
-    
+
     return render(response,"layouts/homeContent.html",context)
+
+
+
+def about_view(response):
+
+    return render(response,"layouts/about.html")
+
+
+def contact_view(response):
+
+    return render(response,"layouts/contact.html")
 
 def login_view(request):
     if request.method == 'POST':
@@ -68,7 +79,7 @@ def login_view(request):
             messages.info(request, "Username or password incorrect")
     else:
         form = UserLog()
-        
+
 
 
     return render(request,'auth/login.html',{'form':form})
@@ -121,8 +132,8 @@ def products_view(request):
 class ItemDetailView(DetailView):
     model = Item
     template_name = "layouts/shopSingle.html"
-    
-@login_required   
+
+@login_required
 def add_to_cart(request,slug):
     item = get_object_or_404(Item, slug=slug)
     order_item, created = OrderItem.objects.get_or_create(
@@ -134,12 +145,12 @@ def add_to_cart(request,slug):
     if order_qs.exists():
         order = order_qs[0]
         if order.items.filter(item__slug=item.slug).exists():
-            order_item.quantity += 1 
+            order_item.quantity += 1
             order_item.save()
-        else : 
+        else :
             order.items.add(order_item)
             messages.info(request, "This item was added to your cart.")
-            
+
     else :
         ordered_date = timezone.now()
         order = Order.objects.create(
@@ -276,7 +287,7 @@ class CheckoutView(View):
                     print("Using the defualt shipping address")
                     address_qs = Address.objects.filter(
                         user=self.request.user,
-                      
+
                         default=True
                     )
                     if address_qs.exists():
@@ -304,7 +315,7 @@ class CheckoutView(View):
                             apartment_address=shipping_address2,
                             country=shipping_country,
                             zip=shipping_zip,
-       
+
                         )
                         shipping_address.save()
 
@@ -321,7 +332,7 @@ class CheckoutView(View):
                         messages.info(
                             self.request, "Please fill in the required shipping address fields")
 
-                
+
 
                 payment_option = form.cleaned_data.get('payment_option')
 

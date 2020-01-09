@@ -24,6 +24,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/',v.register,name ='register'),
+    path('about/',v.about_view,name ='about'),
+    path('contact/',v.contact_view,name ='contact'),
     path('',v.home,name='home'),
     url(r'^login/$',v.login_view,name='login'),
     url(r'^profile/$',v.profile_view,name='profile'),
@@ -41,5 +43,5 @@ urlpatterns = [
     path('payment/<payment_option>/', v.PaymentView.as_view(), name='payment'),
 ]
 
-if settings.DEBUG : 
+if settings.DEBUG :
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
