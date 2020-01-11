@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm,CheckoutForm,CouponForm,RefundForm,PaymentForm,UserLog
 from django.contrib import messages
-from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment
+from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment, Category, SubCategory
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -52,6 +52,7 @@ def register(response):
 
 def home(response):
     context = { 'items' : Item.objects.all(),
+                'categories' : Category.objects.all(),
                 'user' : response.user
     }
 
@@ -67,6 +68,40 @@ def about_view(response):
 def contact_view(response):
 
     return render(response,"layouts/contact.html")
+
+
+
+def category_view(response):
+    context = { 'categories' : Category.objects.all(),
+
+                'items' : Item.objects.all(),
+                'user' : response.user
+    }
+    return render(response,"layouts/category.html",context)
+
+def men_view(response):
+    context = {'items' : Item.objects.filter(category=1),
+               'subCat' :SubCategory.objects.filter(belongsToCat=1)
+
+    }
+    return render(response,"layouts/category.html",context)
+
+
+def women_view(response):
+    context = {'items' : Item.objects.filter(category=2),
+                'subCat' :SubCategory.objects.filter(belongsToCat=2)
+
+    }
+    return render(response,"layouts/category.html",context)
+
+
+def kids_view(response):
+    context = {'items' : Item.objects.filter(category=3),
+                'subCat' :SubCategory.objects.filter(belongsToCat=3)
+
+    }
+    return render(response,"layouts/category.html",context)
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -125,6 +160,7 @@ def changePassword(request):
         form=UserPwChange(user = request.user)
         args = {'form':form}
         return render(request,'register/changepassword.html',args)
+
 def products_view(request):
     context = { 'items' : Item.objects.all()}
     return render(request,"layouts/shopSingle.html",context)

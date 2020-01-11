@@ -26,15 +26,40 @@ class Profile(models.Model):
     one_click_purchasing = models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.user.username} Profile'
+
+
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=100)
+    is_active=models.BooleanField(default=True)
+
+
+
+
+
+
+
+class SubCategory(models.Model):
+    title = models.CharField(max_length=100)
+    belongsToCat = models.ForeignKey(Category, on_delete=models.CASCADE)
+    is_active=models.BooleanField(default=True)
+
+
+
+
+
+
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
     sex = models.CharField(blank=True,null=True,max_length=50)
     price = models.FloatField()
     description = models.TextField(default="Hey")
-    category = models.CharField(choices=CATEGORY_CHOICES,max_length=3)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='item_pics')
     slug = AutoSlugField(populate_from='title')
     discount_price=models.FloatField(blank=True,null=True)
@@ -53,6 +78,9 @@ class Item(models.Model):
         return reverse("remove-from-cart",kwargs={
             'slug':self.slug
         })
+
+
+
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)

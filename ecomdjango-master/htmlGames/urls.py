@@ -26,6 +26,11 @@ urlpatterns = [
     path('register/',v.register,name ='register'),
     path('about/',v.about_view,name ='about'),
     path('contact/',v.contact_view,name ='contact'),
+    path('category/',v.category_view,name ='category'),
+    path('men/',v.men_view,name ='men'),
+    path('wom/',v.women_view,name ='wom'),
+    path('kids/',v.kids_view,name ='kids'),
+
     path('',v.home,name='home'),
     url(r'^login/$',v.login_view,name='login'),
     url(r'^profile/$',v.profile_view,name='profile'),

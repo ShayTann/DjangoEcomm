@@ -52,14 +52,14 @@
 
       <!-- Read more button -->
       <a  href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-rounded forClick">Add to cart</a>
-      <a  href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-rounded forClick">Delete from cart</a>
+      <!-- <a  href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-rounded forClick">Delete from cart</a> -->
       {% if messages %}
-           
+
             {% for message in messages%}
             <div class="alert alert-{{message.tags}}" role="alert">{{message}}
-           
+
             {% endfor %}
-         
+
             {% endif %}
       <span class="float-right mt-2 pt-1" >
         <i class="dropup">
@@ -95,7 +95,7 @@
        <a class="active favorite-toggle" title="Added to Favorite">
           {% comment %} <i style="color:red;" class=" {{ !Auth::user()->favorite_creatives->where('pivot.creative_id',$creative->id)->count()  == 0 ? 'fas' : 'far'}} fa-heart"></i> {% endcomment %}
         </a>
-         
+
 
       {% else %}
          <a  onclick="toastr.info('To add Deals to your favorite list, You need to login first');"><i style="color:red;" class="far fa-heart"></i></a>
