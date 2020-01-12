@@ -24,14 +24,17 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/',v.register,name ='register'),
+    path('search/', v.SearchResultsView.as_view(), name='search_results'),
     path('about/',v.about_view,name ='about'),
     path('contact/',v.contact_view,name ='contact'),
     path('category/',v.category_view,name ='category'),
     path('men/',v.men_view,name ='men'),
     path('wom/',v.women_view,name ='wom'),
     path('kids/',v.kids_view,name ='kids'),
+    path('thanks/',v.thx_view,name ='thanks'),
 
     path('',v.home,name='home'),
+
     url(r'^login/$',v.login_view,name='login'),
     url(r'^profile/$',v.profile_view,name='profile'),
     url(r'^profile/edit/$',v.edit_view,name='edit'),

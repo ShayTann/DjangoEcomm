@@ -1,10 +1,11 @@
 {% extends  'layouts/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<br> <br> <br>
+
   <main >
     <div class="container wow fadeIn">
-      <h2 class="my-5 h2 text-center">Checkout form</h2>
+      <h2 class="my-5 h2 text-center" style="color:red">Checkout</h2>
+      <br>
       <div class="row">
         <div class="col-md-8 mb-4">
           <div class="card">
@@ -25,17 +26,17 @@
                   <label for="shipping_address2" class="">Address 2 (optional)</label>
                 </div>
 
-                <div class="row">
-                  <div class="col-lg-4 col-md-12 mb-4">
+                <div class="form-group row">
+                  <div class="col-md-6">
                     <label for="country">Country</label>
                     {{ form.shipping_country }}
                     <div class="invalid-feedback">
                       Please select a valid country.
                     </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="col-md-6">
                     <label for="shipping_zip">Zip</label>
-                    <input type='text' placeholder='Zip code' id='shipping_zip' name='shipping_zip' class='form-control' />
+                    <input style=" " type='text' placeholder='Zip code' id='shipping_zip' name='shipping_zip' class='form-control' />
                     <div class="invalid-feedback">
                       Zip code required.
                     </div>
@@ -43,8 +44,8 @@
                 </div>
 
                 <div class="custom-control custom-checkbox">
-                 
-                  
+
+
                 </div>
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" name="set_default_shipping" id="set_default_shipping">
@@ -59,6 +60,8 @@
                 <label class="custom-control-label" for="use_default_shipping">Use default shipping address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
               </div>
               {% endif %}
+
+              <br>
               <h3>Payment option</h3>
 
               <div class="d-block my-3">
@@ -71,7 +74,7 @@
               </div>
 
               <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+              <button class="btn btn-danger btn-lg btn-block"  type="submit">Continue to checkout</button>
 
             </form>
 

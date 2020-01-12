@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import login, authenticate
 from django import forms
 from django.utils import timezone
-from django.views.generic import DetailView,View
+from django.views.generic import DetailView,View,TemplateView, ListView
 from django.conf import settings
 from .forms import UserRegisterForm,UserEditForm,UserPwChange
 from django.conf.urls.static import static
@@ -15,6 +15,7 @@ from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment, Categor
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q # new
 import random
 import string
 import stripe
@@ -59,6 +60,17 @@ def home(response):
     return render(response,"layouts/homeContent.html",context)
 
 
+class SearchResultsView(ListView):
+    model = Item
+    template_name = 'layouts/searchResult.html'
+
+    def get_queryset(self): # new
+        query = self.request.GET.get('query')
+        object_list = Item.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list
+
 
 def about_view(response):
 
@@ -68,6 +80,11 @@ def about_view(response):
 def contact_view(response):
 
     return render(response,"layouts/contact.html")
+
+
+def thx_view(response):
+
+    return render(response,"layouts/thankyou.html")
 
 
 

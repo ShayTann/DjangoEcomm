@@ -36,10 +36,10 @@
      <div class="container">
 
        <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
-       <form action="/search"  method="POST">
+       <form action="{% url 'search_results' %}"  method="get">
 
 
-       <input value="" type="text" name="query" id="query" class="form-control forSearch" placeholder="Search.." />
+       <input type="text" name="query" id="query" class="form-control forSearch" placeholder="Search.." />
 
 
        </form>
