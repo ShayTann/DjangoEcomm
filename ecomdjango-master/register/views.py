@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm,CheckoutForm,CouponForm,RefundForm,PaymentForm,UserLog
 from django.contrib import messages
-from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment, Category, SubCategory
+from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,6 +20,7 @@ import random
 import string
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 # Create your views here.
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -53,8 +54,8 @@ def register(response):
 
 def home(response):
     context = { 'items' : Item.objects.all(),
-                'categories' : Category.objects.all(),
-                'user' : response.user
+                'user' : response.user,
+                'hot' : Item.objects.all().order_by('-views')
     }
 
     return render(response,"layouts/homeContent.html",context)
@@ -89,32 +90,39 @@ def thx_view(response):
 
 
 def category_view(response):
-    context = { 'categories' : Category.objects.all(),
-
+    context = { 
                 'items' : Item.objects.all(),
                 'user' : response.user
     }
     return render(response,"layouts/category.html",context)
 
-def men_view(response):
-    context = {'items' : Item.objects.filter(category=1),
-               'subCat' :SubCategory.objects.filter(belongsToCat=1)
+def shoesmanview(response):
+    context = {'items' : Item.objects.filter(category="M"),
+              'subcat' : Item.objects.filter(subcategory="Shoes")
 
     }
     return render(response,"layouts/category.html",context)
 
+def men_view(response):
+    subcat = "ALL"
+    context = {'items' : Item.objects.filter(category="M"),
+              'subcat' : subcat
+
+    }
+
+    return render(response,"layouts/category.html",context)
+
 
 def women_view(response):
-    context = {'items' : Item.objects.filter(category=2),
-                'subCat' :SubCategory.objects.filter(belongsToCat=2)
-
+    context = {'items' : Item.objects.filter(category="W"),
+               
     }
     return render(response,"layouts/category.html",context)
 
 
 def kids_view(response):
-    context = {'items' : Item.objects.filter(category=3),
-                'subCat' :SubCategory.objects.filter(belongsToCat=3)
+    context = {'items' : Item.objects.filter(category="K"),
+         
 
     }
     return render(response,"layouts/category.html",context)
@@ -183,6 +191,7 @@ def products_view(request):
     return render(request,"layouts/shopSingle.html",context)
 
 class ItemDetailView(DetailView):
+
     model = Item
     template_name = "layouts/shopSingle.html"
 

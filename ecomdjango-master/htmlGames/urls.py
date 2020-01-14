@@ -32,7 +32,7 @@ urlpatterns = [
     path('wom/',v.women_view,name ='wom'),
     path('kids/',v.kids_view,name ='kids'),
     path('thanks/',v.thx_view,name ='thanks'),
-
+ 
     path('',v.home,name='home'),
 
     url(r'^login/$',v.login_view,name='login'),

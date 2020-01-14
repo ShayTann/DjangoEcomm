@@ -5,15 +5,27 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
+
 # Create your models here.
-CATEGORY_CHOICES = ( ('MEN','WOMEN'),
-('WOMEN','WOMEN'),
-('KIDS','KIDS'),
+CATEGORY_CHOICES = (('M','MEN'),
+('W','WOMEN'),
+('K','KIDS'),
 )
+subCat = (
+    ('Boy','Boy'),
+    ('Girl','Girl'),
+    ('Shoes','Shoes'),
+    ('Jacket','Jacket'),
+    ('Jeans','Jeans'),
+    ('Hoodies','Hoodies'),
+    ('Accesories','Accesories'),
+)
+
 ADDRESS_CHOICES = (
     ('B', 'Billing'),
     ('S', 'Shipping'),
 )
+
 
 
 
@@ -33,9 +45,9 @@ class Profile(models.Model):
 
 
 
-class Category(models.Model):
-    title = models.CharField(max_length=100)
-    is_active=models.BooleanField(default=True)
+# class Category(models.Model):
+#     title = models.CharField(max_length=100)
+#     is_active=models.BooleanField(default=True)
 
 
 
@@ -43,10 +55,10 @@ class Category(models.Model):
 
 
 
-class SubCategory(models.Model):
-    title = models.CharField(max_length=100)
-    belongsToCat = models.ForeignKey(Category, on_delete=models.CASCADE)
-    is_active=models.BooleanField(default=True)
+# class SubCategory(models.Model):
+#     title = models.CharField(max_length=100)
+#     belongsToCat = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     is_active=models.BooleanField(default=True)
 
 
 
@@ -58,8 +70,18 @@ class Item(models.Model):
     title = models.CharField(max_length=100)
     sex = models.CharField(blank=True,null=True,max_length=50)
     price = models.FloatField()
-    description = models.TextField(default="Hey")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    description = models.TextField(default="Item Description")
+    views = models.IntegerField(default="0")
+    category = models.CharField( 
+        max_length = 20, 
+        choices = CATEGORY_CHOICES, 
+        ) 
+    subcategory = models.CharField( 
+        max_length = 20, 
+        choices = subCat, 
+        blank = True,
+        null=True,
+        )     
     image = models.ImageField(upload_to='item_pics')
     slug = AutoSlugField(populate_from='title')
     discount_price=models.FloatField(blank=True,null=True)
@@ -67,10 +89,13 @@ class Item(models.Model):
     def __str__(self):
         return self.title
     def get_absolute_url(self):
+        self.views=self.views+1
+        self.save()
         return reverse("products",kwargs={
             'slug':self.slug
         })
     def get_add_to_cart_url(self):
+
         return reverse("add-to-cart",kwargs={
             'slug':self.slug
         })
