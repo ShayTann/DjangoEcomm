@@ -1,18 +1,111 @@
 {% extends 'layouts/base.html' %}
+
+
+
+
+{% block extra-css %}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<style type="text/css">
+
+.body{
+    margin-top:20px;
+    background:#eee;
+}
+/* EMAIL */
+.email {
+    padding: 20px 10px 15px 10px;
+	font-size: 1em;
+}
+
+.email .btn.search {
+	font-size: 0.9em;
+}
+
+.email h2 {
+	margin-top: 0;
+	padding-bottom: 8px;
+}
+
+.email .nav.nav-pills > li > a {
+	border-top: 3px solid transparent;
+}
+</style>
+
+
+{% endblock %}
+
+
+
+
 {% block content %}
-Hey  Admin {{ request.user.profile.first_name }} Check the inbox : 
-{% for message in messages %} 
+
+<br><br>
+<!-- BEGIN INBOX CONTENT -->
+					<div class="col-md-12">
+						<div class="row">
+
+              <div style="padding-left:50px;"class="col-md-6 mb-5 mb-md-0">
+                <h2  class="h2 mb-4 text-black"> Hey {{ request.user.profile.first_name }} ! </h2>
+                <h4 class="h4 mb-3 text-black">Please Check your inbox</h4>
+
+
+							</div>
+
+						</div>
+              <br>
+
+						<div class="padding"></div>
+
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+                  {% for message in messages %}
+								<tr class="read">
+									<td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star"></i></td>
+									<td class="action"><i class="fa fa-bookmark"></i></td>
+									<td class="name"><a href="mailto:{{message.email}}">{{message.first_name}}</a></td>
+									<td class="subject"><a href="mailto:{{message.email}}">{{message.message}}</a></td>
+									<td class="replay"> <a style="Color:red;font-weight:bold;" href="mailto:{{message.email}}">Replay </a></td>
+
+
+
+
+                 {% endfor %}
+
+							</tbody>
+            </table>
+						</div>
+
+
+					</div>
+
+          <br><br>
+            <br><br>
+
+
+
+
+
+
+ {% comment %}
+
+Hey  Admin {{ request.user.profile.first_name }} Check the inbox :
+{% for message in messages %}
 <div>
 Message from : {{message.first_name}}
 Son email : {{message.email}}
-Contenue : {{message.message}}  <A HREF="mailto:{{message.email}}">Répondre </A> 
+Contenue : {{message.message}}  <A HREF="mailto:{{message.email}}">Répondre </A>
 </div>
 {% endfor %}
 
 
-SEND MAIL TO ALL SUBSCRIBERS : 
+SEND MAIL TO ALL SUBSCRIBERS :
 <form method= "POST">{% csrf_token %}
 <textarea name="message" placeholder="message.."> </textarea>
 <input type="submit" />
 </form>
+
+ {% endcomment %}
 {% endblock %}

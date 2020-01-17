@@ -33,6 +33,12 @@ class Profile(models.Model):
     image = models.ImageField(default='default.png',upload_to='profile_pics')
     stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
     first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100)
+
+
     one_click_purchasing = models.BooleanField(default=False)
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -48,16 +54,16 @@ class Item(models.Model):
     price = models.FloatField()
     description = models.TextField(default="Item Description")
     views = models.IntegerField(default="0")
-    category = models.CharField( 
-        max_length = 20, 
-        choices = CATEGORY_CHOICES, 
-        ) 
-    subcategory = models.CharField( 
-        max_length = 20, 
-        choices = subCat, 
+    category = models.CharField(
+        max_length = 20,
+        choices = CATEGORY_CHOICES,
+        )
+    subcategory = models.CharField(
+        max_length = 20,
+        choices = subCat,
         blank = True,
         null=True,
-        )     
+        )
     image = models.ImageField(upload_to='item_pics')
     slug = AutoSlugField(populate_from='title')
     discount_price=models.FloatField(blank=True,null=True)
@@ -198,4 +204,3 @@ def userprofile_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
-

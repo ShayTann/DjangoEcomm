@@ -20,7 +20,7 @@ import random
 import string
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
-from django.core.mail import send_mail 
+from django.core.mail import send_mail
 # Create your views here.
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -53,7 +53,7 @@ def register(response):
     return render(response,"auth/register.html",{"form":form})
 
 def home(response):
-    if response.method == "POST": 
+    if response.method == "POST":
         form = SubscribeForm(response.POST)
         if form.is_valid():
             form.save()
@@ -96,7 +96,7 @@ def inbox(response):
             mails,
             fail_silently=False
             )
-        
+
         context = {
             'messages' : Contact.objects.all(),
         }
@@ -106,7 +106,7 @@ def inbox(response):
 
 
 def contact_view(response):
-    
+
     if response.method == "POST":
         form =  ConactusForm(response.POST)
         if form.is_valid():
@@ -116,7 +116,7 @@ def contact_view(response):
             except :
                 pass
     else:
-        
+
         form = ConactusForm()
     context = {
         'form':form
@@ -131,7 +131,7 @@ def thx_view(response):
 
 
 def category_view(response):
-    context = { 
+    context = {
                 'items' : Item.objects.all(),
                 'user' : response.user
     }
@@ -151,8 +151,8 @@ def menS_view(response,slug):
     except :
 
         return render(response,"layouts/category.html")
-        
-    
+
+
 def men_view(response):
     subcat = "ALL"
     context = {'items' : Item.objects.filter(category="M"),
@@ -165,7 +165,7 @@ def men_view(response):
 
 def women_view(response):
     context = {'items' : Item.objects.filter(category="W"),
-               
+
     }
     return render(response,"layouts/category.html",context)
 def womenS_view(response,slug):
@@ -176,11 +176,11 @@ def womenS_view(response,slug):
         return render(response,"layouts/category.html",context)
     except :
         return render(response,"layouts/category.html")
-        
+
 
 def kids_view(response):
     context = {'items' : Item.objects.filter(category="K"),
-         
+
 
     }
     return render(response,"layouts/category.html",context)
@@ -193,8 +193,8 @@ def kidsS_view(response,slug):
     except :
         print("Erreur Pas d'item")
         return render(response,"layouts/category.html")
-        
-        
+
+
 def login_view(request):
     if request.method == 'POST':
         form = UserLog(data =request.POST)
@@ -247,11 +247,11 @@ def changePassword(request):
             update_session_auth_hash(request,form.user)
             return redirect('../')
         else:
-            return render(request,'register/changepassword.html')
+            return render(request,'auth/changepassword.html')
     else:
         form=UserPwChange(user = request.user)
         args = {'form':form}
-        return render(request,'register/changepassword.html',args)
+        return render(request,'auth/changepassword.html',args)
 
 def products_view(request):
     context = { 'items' : Item.objects.all()}

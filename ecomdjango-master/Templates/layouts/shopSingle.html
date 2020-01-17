@@ -42,18 +42,21 @@
     <div class="col-lg-7">
 
       <!-- Category -->
-      <a target="_blank" href="{{item.get_absolute_url}}"class="blue-text">
-        <h3 class="font-weight-bold mb-3">{{item.title }}</h3>
-      </a>
+
+
+          <h2 class="text-black">{{item.title }}</h2>
+
       <!-- Post title -->
       <h6 class="font-weight-bold mb-3"><i style="color:red;" class="fas fa-fire"></i><strong>&nbsp;{{ object.get_category_display }}</strong></h6>
       <!-- Excerpt -->
       <p>{{ object.description }}</p>
+        <p><strong class="text-danger h4">$50.00</strong></p>
+
       <!-- Post data -->
 
       <!-- Read more button -->
-      <a  href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-rounded forClick">Add to cart</a>
-      <!-- <a  href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-rounded forClick">Delete from cart</a> -->
+      <a  style="margin-left:-2px;" href="{{ object.get_add_to_cart_url }}" class="btn blue-gradient forClick">Add to cart</a>
+
       {% if messages %}
 
             {% for message in messages%}
@@ -92,16 +95,6 @@
 
 
 
-       {% if user.is_authenticated %}
-       <a class="active favorite-toggle" title="Added to Favorite">
-          {% comment %} <i style="color:red;" class=" {{ !Auth::user()->favorite_creatives->where('pivot.creative_id',$creative->id)->count()  == 0 ? 'fas' : 'far'}} fa-heart"></i> {% endcomment %}
-        </a>
-
-
-      {% else %}
-         <a  onclick="toastr.info('To add Deals to your favorite list, You need to login first');"><i style="color:red;" class="far fa-heart"></i></a>
-
-     {% endif %}
       </span>
     </div>
 
@@ -116,50 +109,6 @@
 
       </div>
       <br>
-
-
-
-
-    {% comment %} <div class="site-section block-3 site-blocks-2">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-7 site-section-heading text-center pt-4">
-            <h2>TODAY'S TOP DEALS&nbsp;<i style="color:red;" class="fas fa-fire-alt"></i></h2>
-
-          </div>
-        </div>
-
-            <div class="row">
-          <div class="col-md-12 block-3">
-            <div class="nonloop-block-3 owl-carousel">
-               @foreach($creatives as $creative)
-              <div class="item forClick" data-id="{{$creative->id}}">
-                <div class="item-entry" >
-                  <a href="{{item.get_absolute_url}}"  target="_blank" class="product-item md-height d-block">
-                    <img src="..\storage\{{ $creative->creative_image }}" alt="Image" class="img-fluid" >
-                  </a>
-                  <h2 style="text-align: center;" class="item-title"><a href="{{item.get_absolute_url}}" target="_blank">{{ optional($creative->offer)->name }}</a></h2>
-                  <center><div class="star-rating">
-                    <span class="icon-star2 text-warning"></span>
-                    <span class="icon-star2 text-warning"></span>
-                    <span class="icon-star2 text-warning"></span>
-                    <span class="icon-star2 text-warning"></span>
-                    <span class="icon-star2 text-warning"></span>
-                  </div></center>
-                  <center><a target="_blank" href="{{ optional($creative->offer)->offer_url}}"  type="button" class="btn btn-danger btn-rounded">Buy Now</a></center>
-                </div>
-              </div>
-
-               @endforeach
-
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>       CHADSHY ????? {% endcomment %}
-
 
 
 
