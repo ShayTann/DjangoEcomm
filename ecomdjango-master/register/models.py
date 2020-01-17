@@ -69,8 +69,8 @@ class Item(models.Model):
     slug = AutoSlugField(populate_from='title')
     discount_price=models.FloatField(blank=True,null=True)
     countries = MultiSelectField(choices=countries,
-                                 max_choices=3,
-                                 max_length=3,default="Morocco")
+                                 max_choices=10,
+                                 max_length=20,default="Morocco")
     def __str__(self):
         return self.title
     def get_absolute_url(self):
