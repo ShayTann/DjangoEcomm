@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
 from autoslug import AutoSlugField
-
+from multiselectfield import MultiSelectField
+from django_countries import countries
 # Create your models here.
 CATEGORY_CHOICES = (('M','MEN'),
 ('W','WOMEN'),
@@ -67,7 +68,9 @@ class Item(models.Model):
     image = models.ImageField(upload_to='item_pics')
     slug = AutoSlugField(populate_from='title')
     discount_price=models.FloatField(blank=True,null=True)
-
+    countries = MultiSelectField(choices=countries,
+                                 max_choices=3,
+                                 max_length=3,default="Morocco")
     def __str__(self):
         return self.title
     def get_absolute_url(self):
