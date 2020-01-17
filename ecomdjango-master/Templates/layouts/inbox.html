@@ -77,9 +77,21 @@
 							</tbody>
             </table>
 						</div>
+              <br><br>
+            <div style="padding-left:30px;"class="col-md-6 mb-5 mb-md-0">
 
+              <h3  class="h3 mb-4 text-black"> SEND MAIL TO ALL SUBSCRIBERS</h3>
+              <form method= "POST">{% csrf_token %}
+                <div class="form-group shadow-textarea">
+              <textarea  name="message" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+            </div>
+              <!-- <input value="Send" type="submit" /> -->
+              <button type="submit" class="btn btn-danger">Send</button>
+              </form>
 
 					</div>
+          </div>
+
 
           <br><br>
             <br><br>
