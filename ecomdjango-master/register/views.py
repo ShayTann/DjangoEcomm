@@ -83,8 +83,8 @@ def home(response):
     # data = json.loads(rep)
     for country in countries:
         if country[1] in dataform:
-            print(country[1])
-            Client_Country = country[1]
+            print(country[0])
+            Client_Country = country[0]
 
     if response.method == "POST":
         form = SubscribeForm(response.POST)
@@ -98,6 +98,7 @@ def home(response):
                 'hot' : Item.objects.all().order_by('-views'),
                 'form2':form,
                 'client_country':Client_Country
+               
     }
 
     return render(response,"layouts/homeContent.html",context)
@@ -286,7 +287,6 @@ def changePassword(request):
         form=UserPwChange(user = request.user)
         args = {'form':form}
         return render(request,'auth/changepassword.html',args)
-
 def products_view(request):
     context = { 'items' : Item.objects.all()}
     return render(request,"layouts/shopSingle.html",context)
