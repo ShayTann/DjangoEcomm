@@ -145,8 +145,7 @@ def shoesmanview(response):
     return render(response,"layouts/category.html",context)
 def menS_view(response,slug):
     try:
-        subcat = get_object_or_404(Item, subcategory=slug).subcategory
-        context= {'items' : Item.objects.filter(category="M",subcategory=str(subcat))}
+        context= {'items' : Item.objects.filter(category="M",subcategory=str(slug))}
         return render(response,"layouts/category.html",context)
     except :
 
@@ -170,9 +169,7 @@ def women_view(response):
     return render(response,"layouts/category.html",context)
 def womenS_view(response,slug):
     try:
-        subcat = get_object_or_404(Item, subcategory=slug).subcategory
-        print(subcat)
-        context= {'items' : Item.objects.filter(category="W",subcategory=str(subcat))}
+        context= {'items' : Item.objects.filter(category="W",subcategory=str(slug))}
         return render(response,"layouts/category.html",context)
     except :
         return render(response,"layouts/category.html")
@@ -187,8 +184,7 @@ def kids_view(response):
 
 def kidsS_view(response,slug):
     try:
-        subcat = get_object_or_404(Item, subcategory=slug).subcategory
-        context= {'items' : Item.objects.filter(category="K",subcategory=str(subcat))}
+        context= {'items' : Item.objects.filter(category="K",subcategory=str(slug))}
         return render(response,"layouts/category.html",context)
     except :
         print("Erreur Pas d'item")
@@ -351,10 +347,10 @@ def remove_single_item_from_cart(request, slug):
             return redirect("order_summary")
         else:
             messages.info(request, "This item was not in your cart")
-            return redirect("product", slug=slug)
+            return redirect("order_summary")
     else:
         messages.info(request, "You do not have an active order")
-        return redirect("product", slug=slug)
+        return redirect("order_summary")
 class CheckoutView(View):
     def get(self, *args, **kwargs):
         try:
