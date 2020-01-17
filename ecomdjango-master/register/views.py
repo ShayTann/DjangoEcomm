@@ -361,7 +361,7 @@ def add_to_cart(request,slug):
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-    return redirect("order_summary")
+    return redirect("products",slug=slug)
 
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
