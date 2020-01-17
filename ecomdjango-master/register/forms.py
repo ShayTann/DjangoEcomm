@@ -48,10 +48,16 @@ class ConactusForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
-    
+    country = CountryField(blank_label='(select country)').formfield(
+        required=False,
+        widget=CountrySelectWidget(attrs={
+            'class': 'custom-select d-block w-100',
+            'id':'cityform',
+            
+        }))
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['image','country']
 
 class PaymentForm(forms.Form):
     stripeToken = forms.CharField(required=False)

@@ -14,11 +14,20 @@ from django.contrib import messages
 from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment,Contact,Subscriber
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+import requests 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q # new
 import random
 import string
+import json
+from django.http import HttpResponse
+from django.http import StreamingHttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import urllib
+from urllib.request import urlopen
+from django_countries import countries
 import stripe
+from django.core import serializers
 stripe.api_key = settings.STRIPE_SECRET_KEY
 from django.core.mail import send_mail
 # Create your views here.
@@ -51,8 +60,23 @@ def register(response):
         form = UserRegisterForm()
 
     return render(response,"auth/register.html",{"form":form})
-
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 def home(response):
+    ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP 
+    url = 'http://ip-api.com/php/'+ip  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1 
+    rep = requests.get(url).content
+    dataform = str(rep).strip("'<>() ").replace('\'', '\"')
+    # data = json.loads(rep) 
+    for country in countries:
+        if country[1] in dataform:
+            Client_Country = country[1]
+
     if response.method == "POST":
         form = SubscribeForm(response.POST)
         if form.is_valid():
@@ -63,7 +87,8 @@ def home(response):
     context = { 'items' : Item.objects.all(),
                 'user' : response.user,
                 'hot' : Item.objects.all().order_by('-views'),
-                'form2':form
+                'form2':form,
+                'client_country':Client_Country
     }
 
     return render(response,"layouts/homeContent.html",context)
@@ -265,6 +290,7 @@ class ItemDetailView(DetailView):
 @login_required
 def add_to_cart(request,slug):
     item = get_object_or_404(Item, slug=slug)
+    print(item.countries)
     order_item, created = OrderItem.objects.get_or_create(
         item=item,
         user=request.user,
@@ -625,6 +651,7 @@ def get_coupon(request, code):
     except ObjectDoesNotExist:
         messages.info(request, "This coupon does not exist")
         return redirect("checkout")
+
 
 class AddCouponView(View):
     def post(self, *args, **kwargs):
