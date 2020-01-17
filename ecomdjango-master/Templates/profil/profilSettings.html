@@ -161,8 +161,8 @@
                     <!-- First column  -->
                     <div class="col">
                       <div class="md-form mb-0">
-                        <input type="text" class="form-control " id="adresseinput" name="adresse" value="{{ user.profile.adresse }}">
-                        <label for="adresseinput">Adresse</label>
+                        <input type="text" class="form-control " id="adresseinput" name="adresse" value="{{ user.profile.address }}">
+                        <label for="adresseinput">Address</label>
                       </div>
                     </div>
                     <!-- First column  -->
@@ -177,10 +177,7 @@
                    <div class="col" style="margin-top: 25px;">
 
                      {{p_form.country}}
-                          <option value=""  >country</option>
-                    <!-- foreach -->
-                              <option value="" </option>
-                       <!-- endforeach -->
+
 
                      </select>
 
@@ -210,10 +207,8 @@
                     <!-- First column -->
   <div class="col" style="margin-top: 25px;">
 
-    <select class="browser-default custom-select" searchable="Search here.." name="gender" value="{{ user.profile.sexe}}">
-                                          <option value=""  >Gender</option>
-
-                    <option value="Male">Male</option>
+    <select class="browser-default custom-select" searchable="Search here.." name="gender" value="{{ user.profile.sex}}">
+                      <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="None">None</option>
 

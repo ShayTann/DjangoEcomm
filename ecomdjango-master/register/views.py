@@ -14,7 +14,7 @@ from django.contrib import messages
 from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment,Contact,Subscriber
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-import requests 
+import requests
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q # new
 import random
@@ -68,11 +68,13 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 def home(response):
-    ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP 
-    url = 'http://ip-api.com/php/'+ip  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1 
+    Client_Country="Not found"
+
+    ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP
+    url = 'http://ip-api.com/php/'+ip  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1
     rep = requests.get(url).content
     dataform = str(rep).strip("'<>() ").replace('\'', '\"')
-    # data = json.loads(rep) 
+    # data = json.loads(rep)
     for country in countries:
         if country[1] in dataform:
             Client_Country = country[1]
@@ -311,7 +313,7 @@ def add_to_cart(request,slug):
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-    return redirect("products",slug=slug)
+    return redirect("order_summary")
 
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -329,7 +331,7 @@ def remove_from_cart(request, slug):
                 ordered=False
             )[0]
             order.items.remove(order_item)
-        
+
             print("done")
             return redirect("order_summary")
         else:
