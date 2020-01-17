@@ -145,7 +145,8 @@ def shoesmanview(response):
     return render(response,"layouts/category.html",context)
 def menS_view(response,slug):
     try:
-        context= {'items' : Item.objects.filter(category="M",subcategory=str(slug))}
+        subcat = get_object_or_404(Item, subcategory=slug).subcategory
+        context= {'items' : Item.objects.filter(category="M",subcategory=str(subcat))}
         return render(response,"layouts/category.html",context)
     except :
 
@@ -169,7 +170,9 @@ def women_view(response):
     return render(response,"layouts/category.html",context)
 def womenS_view(response,slug):
     try:
-        context= {'items' : Item.objects.filter(category="W",subcategory=str(slug))}
+        subcat = get_object_or_404(Item, subcategory=slug).subcategory
+        print(subcat)
+        context= {'items' : Item.objects.filter(category="W",subcategory=str(subcat))}
         return render(response,"layouts/category.html",context)
     except :
         return render(response,"layouts/category.html")
@@ -184,7 +187,8 @@ def kids_view(response):
 
 def kidsS_view(response,slug):
     try:
-        context= {'items' : Item.objects.filter(category="K",subcategory=str(slug))}
+        subcat = get_object_or_404(Item, subcategory=slug).subcategory
+        context= {'items' : Item.objects.filter(category="K",subcategory=str(subcat))}
         return render(response,"layouts/category.html",context)
     except :
         print("Erreur Pas d'item")
@@ -299,15 +303,15 @@ def remove_from_cart(request, slug):
                 ordered=False
             )[0]
             order.items.remove(order_item)
-            messages.info(request, "This item was removed from your cart.")
+        
             print("done")
-            return redirect("products", slug=slug)
+            return redirect("order_summary")
         else:
             messages.info(request, "This item was not in your cart")
-            return redirect("products", slug=slug)
+            return redirect("order_summary", slug=slug)
     else:
         messages.info(request, "You do not have an active order")
-        return redirect("products", slug=slug)
+        return redirect("order_summary", slug=slug)
 
 class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
@@ -347,10 +351,10 @@ def remove_single_item_from_cart(request, slug):
             return redirect("order_summary")
         else:
             messages.info(request, "This item was not in your cart")
-            return redirect("order_summary")
+            return redirect("order_summary", slug=slug)
     else:
         messages.info(request, "You do not have an active order")
-        return redirect("order_summary")
+        return redirect("order_summary", slug=slug)
 class CheckoutView(View):
     def get(self, *args, **kwargs):
         try:

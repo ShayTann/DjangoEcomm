@@ -154,12 +154,16 @@
               {% else %}
                 <a title="Log In" href="/login" class="icons-btn d-inline-block"><span style="font-size: 19px;" class="fas fa-user-alt"></span></a>
               {% endif %}
+
+              {% if user.is_authenticated %}
+
               <a href="{% url 'order_summary' %}" class="icons-btn d-inline-block bag">
 
       <span class="icon-shopping-bag"></span>
      <span class="number"> {{ request.user|cart_item_count }}</span>
      </a>
-      <a href="/cart" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span class="icon-menu"></span></a>
+       {% endif %}
+
 
 
 

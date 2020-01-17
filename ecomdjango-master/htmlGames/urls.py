@@ -36,7 +36,7 @@ urlpatterns = [
     path('kids/<slug>',v.kidsS_view,name ='kidsS'),
     path('thanks/',v.thx_view,name ='thanks'),
     path('inbox/',v.inbox,name ='inbox'),
- 
+
     path('',v.home,name='home'),
 
     url(r'^login/$',v.login_view,name='login'),

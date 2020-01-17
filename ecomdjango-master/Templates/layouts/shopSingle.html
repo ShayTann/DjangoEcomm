@@ -52,13 +52,21 @@
       <p>{{ object.description }}</p>
         <p><strong class="text-danger h4">${{item.price }}</strong></p>
         <p class="text-primary h7">Ships to <strong>Morroco</strong></p>
-      
+
 
 
       <!-- Post data -->
 
       <!-- Read more button -->
+      {% if user.is_authenticated %}
+
       <a  style="margin-left:-2px;" href="{{ object.get_add_to_cart_url }}" class="btn blue-gradient forClick">Add to cart</a>
+      {% else %}
+
+      <p style="font-weight: 400;color:#00264d">Want to add this Item to your Cart? Please log in <a href="/login" style="font-weight: 900;Color:Blue">here</a></p>
+
+      {% endif %}
+
 
       {% if messages %}
 
