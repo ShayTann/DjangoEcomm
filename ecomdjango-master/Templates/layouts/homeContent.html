@@ -105,11 +105,12 @@
 
 
                 {% for item in items%}
-                  
+                
                 {% if client_country in item.countries %}
-
+               
+        
                 <div class="item forClick">
-
+                        
 
                     <div class="item-entry">
                       <a href="{{item.get_absolute_url}}" class="product-item md-height bg-gray d-block">
@@ -133,7 +134,7 @@
 
 
                 </div>
-                {% endif %}
+               {% endif %}
                   {% endfor %}
             </div>
         </div>
@@ -155,7 +156,7 @@
 
                    {% for item in hot %}
 
-
+                    {% if client_country in item.countries %}
                     <div class="container" style="width:350px">
                     <!--Card-->
                         <!--  height:60px !important;display: block;line-height: 60px; -->
@@ -193,7 +194,7 @@
                     <!--/.Card-->
                     <br><br><br>
                     </div>
-
+{% endif %}
                     {% endfor %}
 
                 </div>

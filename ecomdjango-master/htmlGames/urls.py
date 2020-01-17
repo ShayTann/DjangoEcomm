@@ -38,7 +38,8 @@ urlpatterns = [
     path('inbox/',v.inbox,name ='inbox'),
  
     path('',v.home,name='home'),
-
+    
+                          
     url(r'^login/$',v.login_view,name='login'),
     url(r'^profile/$',v.profile_view,name='profile'),
     url(r'^profile/edit/$',v.edit_view,name='edit'),
