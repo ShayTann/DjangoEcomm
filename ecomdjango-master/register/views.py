@@ -93,7 +93,7 @@ def inbox(response):
             send_mail('Contact Form',
             currentmsg,
             settings.EMAIL_HOST_USER,
-            ['russyoutuber@outlook.fr'],
+            mails,
             fail_silently=False
             )
         
