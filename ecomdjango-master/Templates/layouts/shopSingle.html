@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <a href="javascript:history.back()">Shop</a> <span class="mx-2 mb-0">/</span>
 
-           <strong class="text-black">{{item.title}}</strong></div>
+           <strong class="text-black">{{items.title}}</strong></div>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
 
       <!-- Featured image -->
       <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
-        <img  class="img-fluid " src="{{item.image.url}}" alt="Sample image">
+        <img  class="img-fluid " src="{{items.image.url}}" alt="Sample image">
 
           <div class="mask rgba-white-slight"></div>
         </a>
@@ -44,14 +44,22 @@
       <!-- Category -->
 
 
-          <h2 class="text-black">{{item.title }}</h2>
+          <h2 class="text-black">{{items.title }}</h2>
 
       <!-- Post title -->
-      <h6 class="font-weight-bold mb-3"><i style="color:red;" class="fas fa-fire"></i><strong>&nbsp;{{ object.get_category_display }}</strong></h6>
+      <h6 class="font-weight-bold mb-3"><i style="color:red;" class="fas fa-fire"></i><strong>&nbsp;{{ items.get_category_display }}</strong></h6>
       <!-- Excerpt -->
-      <p>{{ object.description }}</p>
-        <p><strong class="text-danger h4">${{item.price }}</strong></p>
-        <p class="text-primary h7">Ships to <strong>Morroco</strong></p>
+      <p>{{ items.description }}</p>
+        <p><strong class="text-danger h4">${{items.price }}</strong></p>
+
+        {% if check_country in items.countries %}
+
+        <p class="text-primary h7">Ships to <strong> {{name_country }}</strong></p>
+
+        {% else  %}
+
+          <p class="text-primary h7">This item does not ship to <strong> {{name_country }}</strong></p>
+         {% endif %}
 
 
 

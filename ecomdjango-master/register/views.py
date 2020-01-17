@@ -69,11 +69,6 @@ def get_client_ip(request):
     return ip
 def home(response):
 
-    Client_Country="Not found"
-
-    ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP
-    url = 'http://ip-api.com/php/'+ip  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1
-
     Client_Country = "Not found"
     ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP
     url = 'http://ip-api.com/php/'  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1
@@ -83,7 +78,7 @@ def home(response):
     # data = json.loads(rep)
     for country in countries:
         if country[1] in dataform:
-            print(country[0])
+            print(country[1])
             Client_Country = country[0]
 
     if response.method == "POST":
@@ -98,7 +93,7 @@ def home(response):
                 'hot' : Item.objects.all().order_by('-views'),
                 'form2':form,
                 'client_country':Client_Country
-               
+
     }
 
     return render(response,"layouts/homeContent.html",context)
@@ -287,14 +282,60 @@ def changePassword(request):
         form=UserPwChange(user = request.user)
         args = {'form':form}
         return render(request,'auth/changepassword.html',args)
+
 def products_view(request):
-    context = { 'items' : Item.objects.all()}
+    Client_Country = "Not found"
+    Client_Country2 = "Not found"
+    ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP
+    url = 'http://ip-api.com/php/'  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1
+
+    rep = requests.get(url).content
+    dataform = str(rep).strip("'<>() ").replace('\'', '\"')
+    # data = json.loads(rep)
+    for country in countries:
+        if country[0] in dataform:
+            print(country[0])
+            Client_Country = country[1]
+            Client_Country2 = country[0]
+
+
+    context = { 'items' : Item.objects.all(),
+                'name_country': Client_Country,
+                'check_country': Client_Country2,
+
+                }
     return render(request,"layouts/shopSingle.html",context)
 
 class ItemDetailView(DetailView):
 
     model = Item
     template_name = "layouts/shopSingle.html"
+
+
+
+def itemV(response,slug):
+    Client_Country = "Not found"
+    Client_Country2 = "Not found"
+    ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP
+    url = 'http://ip-api.com/php/'  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1
+
+    rep = requests.get(url).content
+    dataform = str(rep).strip("'<>() ").replace('\'', '\"')
+    # data = json.loads(rep)
+    for country in countries:
+
+        if country[1] in dataform:
+            print(country[1])
+            Client_Country = country[1]
+            Client_Country2 = country[0]
+
+    context = { 'items' : get_object_or_404(Item, slug=slug),
+                'name_country': Client_Country,
+                'check_country': Client_Country2,}
+
+    return render(response,"layouts/shopSingle.html",context)
+
+
 
 @login_required
 def add_to_cart(request,slug):
