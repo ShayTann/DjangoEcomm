@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+Hey  Admin {{ request.user.profile.first_name }} Check the inbox : 
+{% for message in messages %} 
+<div>
+Message from : {{message.first_name}}
+Son email : {{message.email}}
+Contenue : {{message.message}}  <A HREF="mailto:{{message.email}}">Répondre </A> 
+</div>
+{% endfor %}
+
+
+SEND MAIL TO ALL SUBSCRIBERS : 
+<form method= "POST">{% csrf_token %}
+<textarea name="message" placeholder="message.."> </textarea>
+<input type="submit" />
+</form>
+{% endblock %}

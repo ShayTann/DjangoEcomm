@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Item, OrderItem, Order, Payment, Coupon, Refund, Address
+from .models import Profile, Item, OrderItem, Order, Payment, Coupon, Refund, Address,Contact,Subscriber
 # Register your models here.
 
 
@@ -54,11 +54,12 @@ class AddressAdmin(admin.ModelAdmin):
     search_fields = ['user', 'street_address', 'apartment_address', 'zip']
 
 admin.site.register(Profile)
-
 admin.site.register(Item)
 admin.site.register(OrderItem)
 admin.site.register(Order)
 admin.site.register(Payment)
 admin.site.register(Coupon)
 admin.site.register(Refund)
+admin.site.register(Contact)
 admin.site.register(Address)
+admin.site.register(Subscriber)

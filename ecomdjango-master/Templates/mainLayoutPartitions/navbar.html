@@ -109,7 +109,9 @@
 
 
              <li><a  href="/about">About us</a></li>
-
+              {% if user.is_superuser %}
+              <li><a  href="/inbox">Inbox</a></li>
+              {% endif %}
 
 
              <li style="width: 10px;"></li>

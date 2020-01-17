@@ -52,7 +52,7 @@
       <div class="col-lg-8">
 
         <div class="card-body form">
-           <form action="contact/store" method="post" id="contactForm">
+           <form  method="POST" id="contactForm">
            {% csrf_token %}
 
           <!-- Header -->
@@ -66,7 +66,7 @@
             <!-- Grid column -->
             <div class="col-md-6">
               <div class="md-form mb-0">
-                <input type="text" id="first_name" class="form-control" name="first_name">
+                {{form.first_name}}
                 <label for="first_name" class="">First name</label>
               </div>
             </div>
@@ -75,7 +75,7 @@
             <!-- Grid column -->
             <div class="col-md-6">
               <div class="md-form mb-0">
-                <input type="text" id="last_name" class="form-control" name="last_name">
+                {{form.last_name}}
                 <label for="last_name" class="">Last name</label>
               </div>
             </div>
@@ -90,7 +90,7 @@
             <!-- Grid column -->
             <div class="col-md-6">
               <div class="md-form mb-0">
-                <input type="email" id="email" class="form-control" name="email" required>
+               {{form.email}}
 
                 <label data-error="wrong"for="email" class="">Your email</label>
               </div>
@@ -100,7 +100,7 @@
             <!-- Grid column -->
             <div class="col-md-6">
               <div class="md-form mb-0">
-                <input type="text" id="phone" class="form-control" name="phone">
+               {{form.numero}}
                 <label for="phone" class="">Your phone</label>
               </div>
             </div>
@@ -115,10 +115,10 @@
             <!-- Grid column -->
             <div class="col-md-12">
               <div class="md-form mb-0">
-                <textarea id="message" class="form-control md-textarea" rows="3" name="message" required></textarea>
+               {{form.message}}
 
-
-                <button id="sub" type="submit" class="btn-lg blue" style="border:none;" > <i class="far fa-paper-plane"></i>  </button>
+                <button type="submit">  Send </button>
+                {% comment %} <button id="sub" type="submit" class="btn-lg blue" style="border:none;" > <i class="far fa-paper-plane"></i>  </button> {% endcomment %}
                 <label for="sub" class="">Your Message</label>
               </div>
             </div>

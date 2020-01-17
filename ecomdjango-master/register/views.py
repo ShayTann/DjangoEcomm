@@ -4,14 +4,14 @@ from django import forms
 from django.utils import timezone
 from django.views.generic import DetailView,View,TemplateView, ListView
 from django.conf import settings
-from .forms import UserRegisterForm,UserEditForm,UserPwChange
+from .forms import UserRegisterForm,UserEditForm,UserPwChange,ConactusForm
 from django.conf.urls.static import static
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
-from .forms import ProfileForm,CheckoutForm,CouponForm,RefundForm,PaymentForm,UserLog
+from .forms import ProfileForm,CheckoutForm,CouponForm,RefundForm,PaymentForm,UserLog,SubscribeForm
 from django.contrib import messages
-from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment
+from .models import Item,OrderItem,Order,Address,Coupon,Profile,Payment,Contact,Subscriber
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,7 +20,7 @@ import random
 import string
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
+from django.core.mail import send_mail 
 # Create your views here.
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
@@ -53,9 +53,17 @@ def register(response):
     return render(response,"auth/register.html",{"form":form})
 
 def home(response):
+    if response.method == "POST": 
+        form = SubscribeForm(response.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = SubscribeForm()
     context = { 'items' : Item.objects.all(),
                 'user' : response.user,
-                'hot' : Item.objects.all().order_by('-views')
+                'hot' : Item.objects.all().order_by('-views'),
+                'form2':form
     }
 
     return render(response,"layouts/homeContent.html",context)
@@ -77,10 +85,43 @@ def about_view(response):
 
     return render(response,"layouts/about.html")
 
+def inbox(response):
+    if response.user.is_superuser:
+        if response.method=="POST":
+            mails = Subscriber.objects.all()
+            currentmsg = response.POST['message']
+            send_mail('Contact Form',
+            currentmsg,
+            settings.EMAIL_HOST_USER,
+            ['russyoutuber@outlook.fr'],
+            fail_silently=False
+            )
+        
+        context = {
+            'messages' : Contact.objects.all(),
+        }
+        return render(response,"layouts/inbox.html",context)
+    else :
+        return redirect('contact')
+
 
 def contact_view(response):
-
-    return render(response,"layouts/contact.html")
+    
+    if response.method == "POST":
+        form =  ConactusForm(response.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('home')
+            except :
+                pass
+    else:
+        
+        form = ConactusForm()
+    context = {
+        'form':form
+        }
+    return render(response,"layouts/contact.html",context)
 
 
 def thx_view(response):
@@ -102,7 +143,16 @@ def shoesmanview(response):
 
     }
     return render(response,"layouts/category.html",context)
+def menS_view(response,slug):
+    try:
+        subcat = get_object_or_404(Item, subcategory=slug).subcategory
+        context= {'items' : Item.objects.filter(category="M",subcategory=str(subcat))}
+        return render(response,"layouts/category.html",context)
+    except :
 
+        return render(response,"layouts/category.html")
+        
+    
 def men_view(response):
     subcat = "ALL"
     context = {'items' : Item.objects.filter(category="M"),
@@ -118,7 +168,15 @@ def women_view(response):
                
     }
     return render(response,"layouts/category.html",context)
-
+def womenS_view(response,slug):
+    try:
+        subcat = get_object_or_404(Item, subcategory=slug).subcategory
+        print(subcat)
+        context= {'items' : Item.objects.filter(category="W",subcategory=str(subcat))}
+        return render(response,"layouts/category.html",context)
+    except :
+        return render(response,"layouts/category.html")
+        
 
 def kids_view(response):
     context = {'items' : Item.objects.filter(category="K"),
@@ -127,7 +185,16 @@ def kids_view(response):
     }
     return render(response,"layouts/category.html",context)
 
-
+def kidsS_view(response,slug):
+    try:
+        subcat = get_object_or_404(Item, subcategory=slug).subcategory
+        context= {'items' : Item.objects.filter(category="K",subcategory=str(subcat))}
+        return render(response,"layouts/category.html",context)
+    except :
+        print("Erreur Pas d'item")
+        return render(response,"layouts/category.html")
+        
+        
 def login_view(request):
     if request.method == 'POST':
         form = UserLog(data =request.POST)

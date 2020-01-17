@@ -37,11 +37,12 @@
            </div>
 
              <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-               <form action="/newsletter" method="post">
-
+               <form action=".." method="post">
+                {% csrf_token %}
                  <h3 class="footer-heading mb-4">Subscribe</h3>
                  <div class="input-group">
-                   <input name = "news_email" type="email" class="form-control" placeholder="Enter your email" value="" required>
+                   {% comment %} <input name = "news_email" type="email" class="form-control" placeholder="Enter your email" value="" required> {% endcomment %}
+                   {{form2.email}}
 
                        <span class="input-group-btn">
                          <button style="bottom: 5px;" class="btn btn-danger" type="submit">

@@ -29,9 +29,13 @@ urlpatterns = [
     path('contact/',v.contact_view,name ='contact'),
     path('category/',v.category_view,name ='category'),
     path('men/',v.men_view,name ='men'),
+    path('men/<slug>',v.menS_view,name ='menS'),
     path('wom/',v.women_view,name ='wom'),
+    path('wom/<slug>',v.womenS_view,name ='womenS'),
     path('kids/',v.kids_view,name ='kids'),
+    path('kids/<slug>',v.kidsS_view,name ='kidsS'),
     path('thanks/',v.thx_view,name ='thanks'),
+    path('inbox/',v.inbox,name ='inbox'),
  
     path('',v.home,name='home'),
 

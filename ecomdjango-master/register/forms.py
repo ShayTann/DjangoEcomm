@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm,PasswordChangeForm,AuthenticationForm
-from .models import Profile
+from .models import Profile,Contact,Subscriber
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
@@ -10,6 +10,41 @@ PAYMENT_CHOICES = (
     ('P', 'PayPal')
 )
 
+class ConactusForm(forms.ModelForm):
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'type':'text',
+            }))
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'type':'text',
+            }))
+    email = forms.EmailField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'type':'email'
+                'required'
+            })) 
+    numero = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'type':'text',
+            }))
+    message= forms.CharField(
+        widget=forms.Textarea(
+             attrs={
+                'class': 'form-control',
+                'type':'text',
+             }))
+    class Meta:
+        model = Contact
+        fields=['first_name','last_name','email','numero','message']
 
 
 class ProfileForm(forms.ModelForm):
@@ -23,7 +58,17 @@ class PaymentForm(forms.Form):
     save = forms.BooleanField(required=False)
     use_default = forms.BooleanField(required=False)
 
-
+class SubscribeForm(forms.ModelForm):
+    email = forms.EmailField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'type':'email'
+                'required'
+            })) 
+    class Meta:
+        model = Subscriber 
+        fields = ['email']
 class UserPwChange(PasswordChangeForm):
     old_password = forms.CharField(
         widget=forms.TextInput(
@@ -65,7 +110,7 @@ class UserEditForm(UserChangeForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Email goes here',
+                'type':'email'
             }))
     first_name = forms.CharField(
         widget=forms.TextInput(
@@ -141,6 +186,7 @@ class UserRegisterForm(UserCreationForm):
                 'name':'password',
                 'type':'password',
             }))
+             
     
     class Meta:
         model = User

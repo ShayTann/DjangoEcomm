@@ -25,6 +25,12 @@ SECRET_KEY = 'x9c$wbh)1ma+dn-g7j!3l_i-)))r(11&v2d@te@0)sl%w9sapi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_HOST = "smtp.gmail.com"
+EMAIl_HOST_USER = "fsttprojet@gmail.com"
+EMAIl_HOST_PASSWORD = "Testing123456"
+EMAIL_PORT = 587
+EMAIL_USE_TLS=True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 ALLOWED_HOSTS = []
 
 
@@ -125,7 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

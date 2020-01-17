@@ -100,13 +100,13 @@
 
                    
                     {% for item in items%}
-
-
+                   
+                        
 
                     <div class="container" style="width:350px">
                     <!--Card-->
                         <!--  height:60px !important;display: block;line-height: 60px; -->
-                        <div  class="card card-cascade card-ecommerce narrower forClick" data-id="{{item.id}}">
+                        <div  class="card card-cascade card-ecommerce narrower forClick" data-id="{{item.id}}" value="{{item.subcategory}}" id ="finalChange">
                             <!--Card image-->
                             <div class="view view-cascade overlay"  >
                                 <img class="card-img-top imgProduct" src="{{item.image.url}}" alt="Image">
@@ -140,9 +140,9 @@
                     <!--/.Card-->
                     <br><br><br>
                     </div>
-
+                       
                     {% endfor %}
-  
+              
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
@@ -156,12 +156,13 @@
                     <div class="border p-4 rounded mb-4" style=" margin-top: 125px;">
                         <h3 class="mb-3 h6 text-uppercase text-black d-block"><b>Categories</b></h3>
                         <ul class="list-unstyled mb-0">
-
-                           <!-- for each category -->
-                              {% comment %} {% for category in subCat %} {% endcomment %}
-                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='' class="d-flex"><span>Jacket</span></a></li>
-                            <li  class="mb-1"><a style="font-weight:bold;color:red" href=' ' class="d-flex"><span>Shoes </span></a></li>
-                              {% comment %} {% endfor %}  {% endcomment %}
+                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='Jack' class="d-flex" ><span> Jacket </span></a></li>
+                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='Shoes' class="d-flex" ><span>Shoes </span></a></li>
+                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='Hoodies' class="d-flex" ><span>Hoodies </span></a></li>
+                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='Accesories' class="d-flex" ><span>Accesories </span></a></li>
+                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='Jeans' class="d-flex" ><span> Jeans </span></a></li>
+                            <li  class="mb-1"><a style="font-weight:bold;color:red" href='Shirt' class="d-flex" ><span> T-shirts </span></a></li>
+  
 
                         </ul>
                     </div>
@@ -178,7 +179,7 @@
 {% block js %}
 
 <script>
-
+  
     $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

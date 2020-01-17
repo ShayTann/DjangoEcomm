@@ -12,10 +12,9 @@ CATEGORY_CHOICES = (('M','MEN'),
 ('K','KIDS'),
 )
 subCat = (
-    ('Boy','Boy'),
-    ('Girl','Girl'),
+    ('Shirt','Shirt'),
     ('Shoes','Shoes'),
-    ('Jacket','Jacket'),
+    ('Jack','Jack'),
     ('Jeans','Jeans'),
     ('Hoodies','Hoodies'),
     ('Accesories','Accesories'),
@@ -25,7 +24,6 @@ ADDRESS_CHOICES = (
     ('B', 'Billing'),
     ('S', 'Shipping'),
 )
-
 
 
 
@@ -45,30 +43,8 @@ class Profile(models.Model):
 
 
 
-# class Category(models.Model):
-#     title = models.CharField(max_length=100)
-#     is_active=models.BooleanField(default=True)
-
-
-
-
-
-
-
-# class SubCategory(models.Model):
-#     title = models.CharField(max_length=100)
-#     belongsToCat = models.ForeignKey(Category, on_delete=models.CASCADE)
-#     is_active=models.BooleanField(default=True)
-
-
-
-
-
-
-
 class Item(models.Model):
     title = models.CharField(max_length=100)
-    sex = models.CharField(blank=True,null=True,max_length=50)
     price = models.FloatField()
     description = models.TextField(default="Item Description")
     views = models.IntegerField(default="0")
@@ -186,7 +162,18 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.user.username
-
+class Contact(models.Model):
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    numero = models.CharField(max_length=50,blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+class Subscriber(models.Model):
+    email = models.EmailField(blank=True, null=True)
+    def __str__(self):
+        return f'{self.email}'
 
 class Coupon(models.Model):
     code = models.CharField(max_length=15)
@@ -211,3 +198,4 @@ def userprofile_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
+
