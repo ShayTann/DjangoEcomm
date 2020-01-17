@@ -68,13 +68,15 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 def home(response):
+    Client_Country = "Not found"
     ip = client_ip = response.META['REMOTE_ADDR'] # OR USE DEF GET_CLIENT_IP 
-    url = 'http://ip-api.com/php/'+ip  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1 
+    url = 'http://ip-api.com/php/'  #TAKE OFF +ip for the test now we dont have a host so the ip will be always 127.0.0.1 
     rep = requests.get(url).content
     dataform = str(rep).strip("'<>() ").replace('\'', '\"')
     # data = json.loads(rep) 
     for country in countries:
         if country[1] in dataform:
+            print(country[1])
             Client_Country = country[1]
 
     if response.method == "POST":

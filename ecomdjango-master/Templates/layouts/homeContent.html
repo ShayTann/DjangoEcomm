@@ -105,8 +105,8 @@
 
 
                 {% for item in items%}
-
-
+                  
+                {% if client_country in item.countries %}
 
                 <div class="item forClick">
 
@@ -133,6 +133,7 @@
 
 
                 </div>
+                {% endif %}
                   {% endfor %}
             </div>
         </div>
